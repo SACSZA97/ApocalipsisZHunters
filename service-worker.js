@@ -53,3 +53,17 @@ self.addEventListener('activate', e => {
       .then(() => self.clients.claim())
   );
 });
+
+
+//Evento fetch intercepta las solicitudes de red y decide como responder
+self.addEventListener('fetch', e => {
+  e.respondWith(
+      caches.match(e.request)
+      .then(res =>{
+          if(res){
+              return res;
+          }
+          return fetch(e.request);
+      })
+  );
+});
