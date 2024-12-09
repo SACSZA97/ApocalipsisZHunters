@@ -1,0 +1,41 @@
+{
+    "name": "Apocalipsis Z Hunters",
+    "short_name": "AZH",
+    "description": "Una Aventura Apocaliptica",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#000000",
+    "orientation": "portrait-primary",
+    "icons":[
+      {
+          "src": "./images/icon-192.png",
+          "sizes": "128x128",
+          "type": "image/png",
+          "purpose": "any"
+      },
+      {
+          "src": "./images/icon-512.png",
+          "sizes": "512x512",
+          "type": "image/png",
+          "purpose": "any"
+      }
+  ],
+  "screenshots":[
+      {
+          "src": "./images/Screen-Shot.png",
+          "sizes": "1760x866",
+          "type": "image/png",
+          "form_factor": "wide"
+      },
+      {
+        "src": "./images/Screen-Shot.jpeg",
+        "sizes": "360x640",
+        "type": "image/png",
+        "form_factor": "mobile"
+    }
+  ],
+    "related_applications": [],
+    "prefer_related_applications": false
+  }
+  
