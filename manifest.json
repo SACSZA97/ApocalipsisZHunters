@@ -29,8 +29,8 @@
           "form_factor": "wide"
       },
       {
-        "src": "./images/Screen-Shot.jpeg",
-        "sizes": "360x640",
+        "src": "./images/Screen-Shot2.jpeg",
+        "sizes": "738x1600",
         "type": "image/png",
         "form_factor": "mobile"
     }
