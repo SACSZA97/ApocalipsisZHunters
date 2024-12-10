@@ -1,69 +1,79 @@
-// service-worker.js
+// service-worker.js v.2
 
-// Cache name
+// Nombre del caché
 const CACHE_NAME = 'apocalipsis-z-hunters-cache-v1';
 
-// Files to cache
-const assets = [
+// Archivos que queremos cachear
+const urlsToCache = [
   '/',
-  './index.html',
-  './css/style.css',
-  './css/bootstrap.min.css',
-  './css/responsive.css',
-  './css/jquery.mCustomScrollbar.min.css',
-  './images/fevicon.png',
-  './images/loading.gif',
-  './images/mgtb.png',
-  './js/jquery.min.js',
-  './js/popper.min.js',
-  './js/bootstrap.bundle.min.js',
-  './js/jquery-3.0.0.min.js',
-  './js/plugin.js',
-  './js/jquery.mCustomScrollbar.concat.min.js',
-  './js/custom.js',
-  './app.js'
+  '/index.html',
+  '/css/style.css',
+  '/css/bootstrap.min.css',
+  '/css/responsive.css',
+  '/css/jquery.mCustomScrollbar.min.css',
+  '/images/loading.gif',
+  '/images/mgtb.png',
+  '/js/jquery.min.js',
+  '/js/popper.min.js',
+  '/js/bootstrap.bundle.min.js',
+  '/js/jquery-3.0.0.min.js',
+  '/js/plugin.js',
+  '/js/jquery.mCustomScrollbar.concat.min.js',
+  '/js/custom.js',
+  '/app.js'
 ];
 
-
-self.addEventListener('install', e => {
-  e.waitUntil(
-      caches.open(cacheName)
-      .then(cache =>{
-          return cache.addAll(assets)
-              .then(() => self.skipWaiting());
-      })
-      .catch(err => console.log('fallo registro de cache', err))
+// Evento de instalación
+self.addEventListener('install', event => {
+  console.log('Service Worker instalado');
+  
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => {
+      console.log('Archivos cacheados');
+      return cache.addAll(urlsToCache);
+    })
   );
 });
 
-//Evento de activacion se ejecuta despues de que el sw se instala y toma el control de la aplicacion
-self.addEventListener('activate', e => {
-  const cacheWhitelist = [cacheName];
-  e.waitUntil(
-      cache.keys()
-      .then(cacheNames =>{
-          return Promise.all(
-              cacheNames.map(cName => {
-                  if(!cacheWhitelist.includes(cName)){
-                      return caches.delete(cName);
-                  }
-              })
-          );
-      })
-      .then(() => self.clients.claim())
-  );
-});
-
-
-//Evento fetch intercepta las solicitudes de red y decide como responder
-self.addEventListener('fetch', e => {
-  e.respondWith(
-      caches.match(e.request)
-      .then(res =>{
-          if(res){
-              return res;
+// Evento de activación
+self.addEventListener('activate', event => {
+  console.log('Service Worker activado');
+  
+  const cacheWhitelist = [CACHE_NAME];
+  
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (!cacheWhitelist.includes(cacheName)) {
+            console.log(`Eliminando caché antiguo: ${cacheName}`);
+            return caches.delete(cacheName);
           }
-          return fetch(e.request);
-      })
+        })
+      );
+    })
+  );
+});
+
+// Evento de fetch (intercepta las solicitudes)
+self.addEventListener('fetch', event => {
+  console.log('Interceptando fetch para:', event.request.url);
+  
+  event.respondWith(
+    caches.match(event.request).then(response => {
+      // Devuelve el archivo desde el caché si existe
+      return response || fetch(event.request).then(fetchResponse => {
+        // Cachea dinámicamente los nuevos recursos
+        return caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, fetchResponse.clone());
+          return fetchResponse;
+        });
+      }).catch(() => {
+        // Fallback para solicitudes fallidas (opcional)
+        if (event.request.mode === 'navigate') {
+          return caches.match('/index.html');
+        }
+      });
+    })
   );
 });
