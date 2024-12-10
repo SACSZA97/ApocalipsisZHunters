@@ -5,22 +5,21 @@ const CACHE_NAME = 'apocalipsis-z-hunters-cache-v1';
 
 // Archivos que queremos cachear
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/css/style.css',
-  '/css/bootstrap.min.css',
-  '/css/responsive.css',
-  '/css/jquery.mCustomScrollbar.min.css',
-  '/images/loading.gif',
-  '/images/mgtb.png',
-  '/js/jquery.min.js',
-  '/js/popper.min.js',
-  '/js/bootstrap.bundle.min.js',
-  '/js/jquery-3.0.0.min.js',
-  '/js/plugin.js',
-  '/js/jquery.mCustomScrollbar.concat.min.js',
-  '/js/custom.js',
-  '/app.js'
+  './index.html',
+  './css/style.css',
+  './css/bootstrap.min.css',
+  './css/responsive.css',
+  './css/jquery.mCustomScrollbar.min.css',
+  './images/loading.gif',
+  './images/mgtb.png',
+  './js/jquery.min.js',
+  './js/popper.min.js',
+  './js/bootstrap.bundle.min.js',
+  './js/jquery-3.0.0.min.js',
+  './js/plugin.js',
+  './js/jquery.mCustomScrollbar.concat.min.js',
+  './js/custom.js',
+  './app.js'
 ];
 
 // Evento de instalación
@@ -71,7 +70,7 @@ self.addEventListener('fetch', event => {
       }).catch(() => {
         // Fallback para solicitudes fallidas (opcional)
         if (event.request.mode === 'navigate') {
-          return caches.match('/index.html');
+          return caches.match('./index.html');
         }
       });
     })
