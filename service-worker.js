@@ -5,6 +5,7 @@ const CACHE_NAME = 'apocalipsis-z-hunters-cache-v1';
 
 // Archivos que queremos cachear
 const urlsToCache = [
+  './',
   './index.html',
   './css/style.css',
   './css/bootstrap.min.css',
