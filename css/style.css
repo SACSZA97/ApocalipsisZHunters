@@ -1540,6 +1540,44 @@ font-size: 60px;
 line-height: 60px;
 padding: 45px 0;
 text-align: center;}
+#games_container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilo para los títulos dentro del contenedor */
+  #games-container h2 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  
+  /* Estilo para las imágenes de los juegos */
+  .games-container img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    width: 400px;
+    right: 400px; 
+    text-align: center;
+    
+  }
+  
+  /* Estilo para los nombres de los juegos */
+  .game-contanier p {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+   
+  }
 
 
 
