@@ -43,3 +43,25 @@ function displayQuote(quoteData) {
       console.error("No se encontró el contenedor en el DOM.");
   }
 }
+
+const personajesContainer = document.getElementById("personajes-container");
+
+function mostrarPersonajes(personajes) {
+  personajesContainer.innerHTML = ""; // Limpiamos el contenedor
+  personajes.forEach((personaje) => {
+    const personajeDiv = document.createElement("div");
+    personajeDiv.classList.add("personaje");
+
+    personajeDiv.innerHTML = `
+      <img src="${personaje.imagen}" alt="${personaje.nombre}" />
+      <h2>${personaje.nombre}</h2>
+      <p>${personaje.descripcion}</p>
+      <p>Daño: ${personaje.daño}</p>
+    `;
+
+    personajesContainer.appendChild(personajeDiv);
+  });
+}
+
+console.log("Mostrando personajes...");
+console.log(personajes); // Asegúrate de que los datos tienen la estructura esperada
