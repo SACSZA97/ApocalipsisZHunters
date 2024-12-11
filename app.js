@@ -33,35 +33,29 @@ function fetchQuote() {
 function displayQuote(quoteData) {
   const container = document.getElementById('games-container');
   if (container) {
-      if (quoteData.character && quoteData.character.personajes) {
-          container.innerHTML = `<p><strong>${quoteData.character.personajes}:</strong></p>`;
-      } else {
-          container.innerHTML = `<p>No se pudo cargar la información del personaje.</p>`;
-      }
-      console.log("Cita mostrada correctamente");
+    // Verifica que 'personajes' exista en 'quoteData' y que sea un array
+    if (quoteData.personajes && Array.isArray(quoteData.personajes)) {
+      container.innerHTML = ""; // Limpia el contenedor antes de agregar contenido
+      // Recorre los personajes y genera contenido dinámico
+      quoteData.personajes.forEach((personaje) => {
+        const personajeHTML = `
+          <div class="personaje">
+            <img src="${personaje.imagen}" alt="${personaje.nombre}" />
+            <h2>${personaje.nombre}</h2>
+            <p>${personaje.descripcion}</p>
+            <p>Daño: ${personaje.daño}</p>
+          </div>
+        `;
+        container.innerHTML += personajeHTML;
+      });
+    } else {
+      container.innerHTML = `<p>No se pudo cargar la información del personaje.</p>`;
+    }
+    console.log("Cita mostrada correctamente");
   } else {
-      console.error("No se encontró el contenedor en el DOM.");
+    console.error("No se encontró el contenedor en el DOM.");
   }
 }
 
-const personajesContainer = document.getElementById("personajes-container");
 
-function mostrarPersonajes(personajes) {
-  personajesContainer.innerHTML = ""; // Limpiamos el contenedor
-  personajes.forEach((personaje) => {
-    const personajeDiv = document.createElement("div");
-    personajeDiv.classList.add("personaje");
 
-    personajeDiv.innerHTML = `
-      <img src="${personaje.imagen}" alt="${personaje.nombre}" />
-      <h2>${personaje.nombre}</h2>
-      <p>${personaje.descripcion}</p>
-      <p>Daño: ${personaje.daño}</p>
-    `;
-
-    personajesContainer.appendChild(personajeDiv);
-  });
-}
-
-console.log("Mostrando personajes...");
-console.log(personajes); // Asegúrate de que los datos tienen la estructura esperada
