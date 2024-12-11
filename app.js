@@ -1,52 +1,45 @@
-// app.js
-
-
 document.addEventListener('DOMContentLoaded', function() {
-    // Select the install button
-    const installButton = document.getElementById('install-button');
-  
+  const installButton = document.getElementById('install-button');
 
-    if (installButton) {
-      // Add a click event listener to the install button
+  if (installButton) {
       installButton.addEventListener('click', function() {
-        // Log a message to the console when the button is clicked
-        console.log('Install button clicked');
+          console.log('Install button clicked');
       });
-    }
-  
-    // Log a message to the console when the DOM is fully loaded
-    console.log('DOM fully loaded and parsed');
-  });
-  
-  console.log("Script app.js cargado"); // Verificación de que el archivo se está cargando
+  }
+
+  console.log('DOM fully loaded and parsed');
+  fetchQuote();
+});
 
 const API_URL = 'https://juegozombi-3447d-default-rtdb.firebaseio.com/.json';
 
 function fetchQuote() {
-    console.log("Intentando obtener una cita..."); // Verificación de que se llama a la función
+  console.log("Intentando obtener una cita...");
 
-    fetch(API_URL)
-        .then(response => {
-            console.log("Respuesta recibida:", response); // Mostrar la respuesta en consola
-            if (!response.ok) {
-                throw new Error(`Error en la respuesta: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log("Datos obtenidos:", data); // Mostrar datos obtenidos en consola
-            displayQuote(data);
-        })
-        .catch(error => console.error('Error al obtener la cita:', error));
+  fetch(API_URL)
+      .then(response => {
+          if (!response.ok) {
+              throw new Error(`Error en la respuesta: ${response.status}`);
+          }
+          return response.json();
+      })
+      .then(data => {
+          console.log("Datos obtenidos:", data);
+          displayQuote(data);
+      })
+      .catch(error => console.error('Error al obtener la cita:', error));
 }
 
 function displayQuote(quoteData) {
-    const container = document.getElementById('games-container');
-    container.innerHTML = `
-        <p><strong>${quoteData.character.personajes}:</strong></p>
-    `;
-    console.log("Cita mostrada correctamente");
+  const container = document.getElementById('games-container');
+  if (container) {
+      if (quoteData.character && quoteData.character.personajes) {
+          container.innerHTML = `<p><strong>${quoteData.character.personajes}:</strong></p>`;
+      } else {
+          container.innerHTML = `<p>No se pudo cargar la información del personaje.</p>`;
+      }
+      console.log("Cita mostrada correctamente");
+  } else {
+      console.error("No se encontró el contenedor en el DOM.");
+  }
 }
-
-// Llamar a la función al cargar la página
-fetchQuote();
